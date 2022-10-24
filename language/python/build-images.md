@@ -28,9 +28,11 @@ Let’s create a simple Python application using the Flask framework that we’l
 
 ```console
 $ cd /path/to/python-docker
-$ pip3 install Flask
-$ pip3 freeze | grep Flask >> requirements.txt
-$ touch app.py
+$ python3 -m venv .venv
+$ source .venv/bin/activate
+(.venv) $ python3 -m pip install Flask
+(.venv) $ python3 -m pip freeze > requirements.txt
+(.venv) $ touch app.py
 ```
 
 Now, let’s add some code to handle simple web requests. Open this working directory in your favorite IDE and enter the following code into the `app.py` file.
@@ -49,7 +51,9 @@ def hello_world():
 Let’s start our application and make sure it’s running properly. Open your terminal and navigate to the working directory you created.
 
 ```console
-$ python3 -m flask run
+$ cd /path/to/python-docker
+$ source .venv/bin/activate
+(.venv) $ python3 -m flask run
 ```
 
 To test that the application is working properly, open a new browser and navigate to `http://localhost:5000`.
@@ -79,7 +83,7 @@ Docker images can be inherited from other images. Therefore, instead of creating
 
 > **Note**
 >
-> To learn more about creating your own base images, see [Creating base images](https://docs.docker.com/develop/develop-images/baseimages/).
+> To learn more about creating your own base images, see [Creating base images](../../develop/develop-images/baseimages.md).
 
 To make things easier when running the rest of our commands, let’s create a working directory. This instructs Docker to use this path as the default location for all subsequent commands. By doing this, we do not have to type out full file paths but can use relative paths based on the working directory.
 
@@ -173,7 +177,7 @@ $ docker build --tag python-docker .
 
 ## View local images
 
-To see a list of images we have on our local machine, we have two options. One is to use the CLI and the other is to use [Docker Desktop](../../desktop/dashboard.md#explore-your-images). As we are currently working in the terminal let’s take a look at listing images using the CLI.
+To see a list of images we have on our local machine, we have two options. One is to use the CLI and the other is to use [Docker Desktop](../../desktop/use-desktop/images.md). As we are currently working in the terminal let’s take a look at listing images using the CLI.
 
 To list images, simply run the `docker images` command.
 
@@ -181,10 +185,9 @@ To list images, simply run the `docker images` command.
 $ docker images
 REPOSITORY      TAG               IMAGE ID       CREATED         SIZE
 python-docker   latest            8cae92a8fbd6   3 minutes ago   123MB
-python          3.8-slim-buster   be5d294735c6   9 days ago      113MB
 ```
 
-You should see at least two images listed. One for the base image `3.8-slim-buster` and the other for the image we just built `python-docker:latest`.
+You should see at least one image listed, the image we just built `python-docker:latest`.
 
 ## Tag images
 
@@ -238,6 +241,4 @@ In this module, we took a look at setting up our example Python application that
 
 ## Feedback
 
-Help us improve this topic by providing your feedback. Let us know what you think by creating an issue in the [Docker Docs](https://github.com/docker/docker.github.io/issues/new?title=[Python%20docs%20feedback]){:target="_blank" rel="noopener" class="_"} GitHub repository. Alternatively, [create a PR](https://github.com/docker/docker.github.io/pulls){:target="_blank" rel="noopener" class="_"} to suggest updates.
-
-<br />
+Help us improve this topic by providing your feedback. Let us know what you think by creating an issue in the [Docker Docs]({{ site.repo }}/issues/new?title=[Python%20docs%20feedback]){:target="_blank" rel="noopener" class="_"} GitHub repository. Alternatively, [create a PR]({{ site.repo }}/pulls){:target="_blank" rel="noopener" class="_"} to suggest updates.

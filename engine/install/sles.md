@@ -34,20 +34,28 @@ To get started with Docker Engine on SLES, make sure you
 
 ### OS requirements
 
-To install Docker Engine, you need a maintained version of SLES 15-SP2 or SLES 15-SP3 on s390x (IBM Z).
+To install Docker Engine, you need a maintained version of SLES 15-SP3 or SLES 15-SP4 on s390x (IBM Z).
 Archived versions aren't supported or tested.
 
-The [`SCC SUSE`](https://scc.suse.com/packages?name=SUSE%20Linux%20Enterprise%20Server&version=15.2&arch=s390x)
+The [`SCC SUSE`](https://scc.suse.com/packages?name=SUSE%20Linux%20Enterprise%20Server&version=15.3&arch=s390x)
 repositories must be enabled.
 
 The [OpenSUSE `SELinux` repository](https://download.opensuse.org/repositories/security)
 must be enabled. This repository is not added by default, and you need to enable
 it for the version of SLES you are running. Run the following commands to add it:
 
+For SLES 15-SP3:
+
 ```console
-$ sles_version="$(. /etc/os-release && echo "${VERSION_ID##*.}")"
-$ opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/SLE_15_SP$sles_version/security:SELinux.repo"
-$ sudo zypper addrepo $opensuse_repo 
+$ opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/SLE_15_SP3/security:SELinux.repo"
+$ sudo zypper addrepo $opensuse_repo
+```
+
+For SLES 15-SP4:
+
+```console
+$ opensuse_repo="https://download.opensuse.org/repositories/security:SELinux/15.4/security:SELinux.repo"
+$ sudo zypper addrepo $opensuse_repo
 ```
 
 The `overlay2` storage driver is recommended.
@@ -101,39 +109,16 @@ from the repository.
 
 {% assign download-url-base = "https://download.docker.com/linux/sles" %}
 
-Set up the **stable** repository.
+Set up the repository.
 
 ```console
 $ sudo zypper addrepo {{ download-url-base }}/docker-ce.repo
 ```
 
-> **Optional**: Enable the **nightly** or **test** repositories.
->
-> These repositories are included in the `docker.repo` file above but are disabled
-> by default. You can enable them alongside the stable repository.  The following
-> command enables the **nightly** repository.
->
-> ```console
-> $ sudo zypper mr -e docker-ce-nightly
-> ```
->
-> To enable the **test** channel, run the following command:
->
-> ```console
-> $ sudo zypper mr -e docker-ce-test
-> ```
->
-> You can disable the **nightly** or **test** repository by running the
-> ```console
-> $ sudo zypper mr -d docker-ce-nightly
-> $ sudo zypper mr -d docker-ce-test
-> ```
->
-> [Learn about **nightly** and **test** channels](index.md).
-
 #### Install Docker Engine
 
-1.  Install the _latest version_ of Docker Engine, containerd, and Docker Compose, or go to the next step to install a specific version:
+1.  Install the _latest version_ of Docker Engine, containerd, and Docker Compose
+    or go to the next step to install a specific version:
 
     ```console
     $ sudo zypper install docker-ce docker-ce-cli containerd.io docker-compose-plugin
@@ -141,13 +126,6 @@ $ sudo zypper addrepo {{ download-url-base }}/docker-ce.repo
 
     If prompted to accept the GPG key, verify that the fingerprint matches
     `060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35`, and if so, accept it.
-
-    > Got multiple Docker repositories?
-    >
-    > If you have multiple Docker repositories enabled, installing
-    > or updating without specifying a version in the `zypper install` or
-    > `zypper update` command always installs the highest possible version,
-    > which may not be appropriate for your stability needs.
 
     This command installs Docker, but it doesn't start Docker. It also creates a
     `docker` group, however, it doesn't add any users to the group by default.
@@ -214,12 +192,6 @@ a new file each time you want to upgrade Docker Engine.
 1.  Go to [{{ download-url-base }}/]({{ download-url-base }}/){: target="_blank" rel="noopener" class="_" }
     and choose your version of SLES. Then browse to `15/s390x/stable/Packages/`
     and download the `.rpm` file for the Docker version you want to install.
-
-    > **Note**
-    >
-    > To install a **nightly** or **test** (pre-release) package,
-    > change the word `stable` in the above URL to `nightly` or `test`.
-    > [Learn about **nightly** and **test** channels](index.md).
 
 2.  Install Docker Engine, changing the path below to the path where you downloaded
     the Docker package.

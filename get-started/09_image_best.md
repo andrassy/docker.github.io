@@ -107,6 +107,7 @@ Let's look at the Dockerfile we were using one more time...
 ```dockerfile
 # syntax=docker/dockerfile:1
 FROM node:12-alpine
+RUN apk add --no-cache python2 g++ make
 WORKDIR /app
 COPY . .
 RUN yarn install --production
@@ -127,6 +128,7 @@ a change to the `package.json`. Make sense?
     ```dockerfile
     # syntax=docker/dockerfile:1
     FROM node:12-alpine
+    RUN apk add --no-cache python2 g++ make
     WORKDIR /app
     COPY package.json yarn.lock ./
     RUN yarn install --production
@@ -273,9 +275,13 @@ COPY --from=build /app/build /usr/share/nginx/html
 Here, we are using a `node:12` image to perform the build (maximizing layer caching) and then copying the output
 into an nginx container. Cool, huh?
 
-## Recap
+## Next steps
 
-By understanding a little bit about how images are structured, we can build images faster and ship fewer changes.
-Scanning images gives us confidence that the containers we are running and distributing are secure.
-Multi-stage builds also help us reduce overall image size and increase final container security by separating
+By understanding a little bit about the structure of images, you can build images faster and ship fewer changes.
+Scanning images gives you confidence that the containers you are running and distributing are secure.
+Multi-stage builds also help you reduce overall image size and increase final container security by separating
 build-time dependencies from runtime dependencies.
+
+In the next section, you'll learn about additional resources you can use to continue learning about containers.
+
+[What next](11_what_next.md){: .button  .primary-btn}
